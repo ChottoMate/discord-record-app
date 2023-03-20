@@ -2,7 +2,6 @@ import { DiscordRequest } from "./utils.js"
 
 export async function HasGuildCommands(appId, guildId, commands) {
     if (guildId === '' || appId === '') return;
-
     commands.forEach((c) => HasGuildCommand(appId, guildId, c));
 }
 
@@ -41,3 +40,15 @@ export const TEST_COMMAND = {
     description: 'Basic guild command',
     type: 1,
 };
+
+export const START_COMMAND = {
+    name: 'start',
+    description: 'Start task command',
+    type: 1,
+}
+
+export const STOP_COMMAND = {
+    name: 'stop',
+    description: 'Stop task command',
+    type: 1,
+}
