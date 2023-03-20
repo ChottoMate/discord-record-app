@@ -11,6 +11,11 @@ app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
 app.post('/interactions', async function(req, res) {
     const { type, id, data } = req.body;
 
+    if (type === InteractionType.PING) {
+        console.log("うんち");
+        return res.send({ type: InteractionResponseType.PONG });
+    }
+
     if (type === InteractionType.APPLICATION_COMMAND) {
         const { name } = data;
 
