@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { InteractionResponseType, InteractionType } from 'discord-interactions';
 import express from 'express';
 import { HasGuildCommands, START_COMMAND, STOP_COMMAND, TEST_COMMAND } from './commands.js';
-import { VerifyDiscordRequest } from './utils.js';
+import { VerifyDiscordRequest, ZeroPadding } from './utils.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,7 +14,6 @@ app.post('/interactions', async function(req, res) {
     const { type, id, data } = req.body;
 
     if (type === InteractionType.PING) {
-        console.log("うんち");
         return res.send({ type: InteractionResponseType.PONG });
     }
 
@@ -31,7 +30,6 @@ app.post('/interactions', async function(req, res) {
         }
         if (name === 'start') {
             start_time = new Date();
-            let start_time_format = `${start_time.getHours()}:${start_time.getMinutes()}:${start_time.getSeconds()}`;
             return res.send({
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
@@ -41,14 +39,11 @@ app.post('/interactions', async function(req, res) {
         }
         if (name === 'stop') {
             stop_time = new Date();
-            console.log(start_time);
-            let stop_time_format = `${stop_time.getHours()}:${stop_time.getMinutes()}:${stop_time.getSeconds()}`;
             let diff = stop_time.getTime() - start_time.getTime();
-            let diff_hour = ('0' + Math.floor(diff / (60 * 60 * 1000))).slice(-2);
-            let diff_minute = ('0' + Math.floor(diff / (60 * 1000))).slice(-2);
-            let diff_second = ('0' +  Math.floor(diff / 1000)).slice(-2);
-            let recorded_time = `${diff_hour}:${diff_minute}:${diff_second}`;
-            console.log("recorded time: " + recorded_time);
+            let diff_hour = Math.floor(diff / (60 * 60 * 1000));
+            let diff_minute = Math.floor(diff / (60 * 1000));
+            let diff_second = Math.floor(diff / 1000);
+            let recorded_time = `${ZeroPadding(diff_hour, 2)}:${ZeroPadding(diff_minute, 2)}:${ZeroPadding(diff_second, 2)}`;
             return res.send({
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {

@@ -34,3 +34,9 @@ export async function DiscordRequest(endpoint, options) {
     }
     return res;
 }
+
+export function ZeroPadding(num, digit) {
+    const zero = '0'.repeat(digit - 1);
+    const result = (zero + num).slice(-1 * digit);
+    return result
+}
