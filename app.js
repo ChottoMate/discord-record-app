@@ -8,6 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 let start_time;
 let stop_time;
+let is_started = false;
 app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
 
 app.post('/interactions', async function(req, res) {
@@ -29,15 +30,33 @@ app.post('/interactions', async function(req, res) {
             });
         }
         if (name === 'start') {
+            if (is_started == true) {
+                return res.send({
+                    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+                    data: {
+                        content: 'Task already started',
+                    }
+                });
+            }
+            is_started = true;
             start_time = new Date();
             return res.send({
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
                     content: 'Task starts',
                 }
-            })
+            });
         }
         if (name === 'stop') {
+            if (is_started == false) {
+                return res.send({
+                    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+                    data: {
+                        content: 'No task already started',
+                    }
+                });
+            }
+            is_started = false;
             stop_time = new Date();
             let diff = stop_time.getTime() - start_time.getTime();
             let diff_hour = Math.floor(diff / (60 * 60 * 1000));
