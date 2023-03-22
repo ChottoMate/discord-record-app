@@ -3,11 +3,11 @@ import fetch from "node-fetch";
 const baseURL = 'https://pixe.la/';
 
 export async function CreateGraph() {
-    const endpoint = baseURL + `vi/users/${process.env.USER_NAME}/graphs`;
+    const endpoint = baseURL + `v1/users/${process.env.USER_NAME}/graphs`;
     console.log(endpoint);
     const body = {
-        id: 'test_id',
-        name: 'test_name',
+        id: 'test-id',
+        name: 'test-name',
         unit: 'km',
         type: 'int',
         color: 'momiji',
@@ -15,7 +15,8 @@ export async function CreateGraph() {
     const options = {
         method: 'POST',
         headers: {
-            `X-USER-TOKEN: ${process.env.PASSWORD}`,
+            'Content-Type': 'application/json',
+            'X-USER-TOKEN': process.env.PASSWORD,
         },
         body: JSON.stringify(body),
     };

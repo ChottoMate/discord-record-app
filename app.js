@@ -76,14 +76,14 @@ app.post('/interactions', async function(req, res) {
             if (!res_pixela.ok) {
                 const data = await res_pixela.json();
                 console.log(res_pixela.status);
-                res.send({
+                return res.send({
                     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                     data: {
                         content: JSON.stringify(data)
                     }
                 })
             }
-            res.send({
+            return res.send({
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
                     content: 'Graph created'
