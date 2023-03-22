@@ -1,8 +1,9 @@
 import 'dotenv/config';
 import { InteractionResponseType, InteractionType } from 'discord-interactions';
 import express from 'express';
-import { HasGuildCommands, START_COMMAND, STOP_COMMAND, TEST_COMMAND } from './commands.js';
+import { CREATE_GRAPH_COMMNAND, HasGuildCommands, START_COMMAND, STOP_COMMAND, TEST_COMMAND } from './commands.js';
 import { VerifyDiscordRequest, ZeroPadding } from './utils.js';
+import { CreateGraph } from './pixela.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -70,6 +71,25 @@ app.post('/interactions', async function(req, res) {
                 }
             })
         }
+        if (name === 'create_graph') {
+            const res_pixela = await CreateGraph();
+            if (!res_pixela.ok) {
+                const data = await res_pixela.json();
+                console.log(res_pixela.status);
+                res.send({
+                    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+                    data: {
+                        content: JSON.stringify(data)
+                    }
+                })
+            }
+            res.send({
+                type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+                data: {
+                    content: 'Graph created'
+                }
+            })
+        }
     }
 })
 
@@ -77,6 +97,6 @@ app.listen(PORT, () => {
     console.log('Listening on port', PORT);
 
     HasGuildCommands(process.env.APP_ID, process.env.GUILD_ID, [
-        TEST_COMMAND, START_COMMAND, STOP_COMMAND
+        TEST_COMMAND, START_COMMAND, STOP_COMMAND, CREATE_GRAPH_COMMNAND
     ]);
 });

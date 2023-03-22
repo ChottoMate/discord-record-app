@@ -52,3 +52,9 @@ export const STOP_COMMAND = {
     description: 'Stop task command',
     type: 1,
 }
+
+export const CREATE_GRAPH_COMMNAND = {
+    name: 'create_graph',
+    description: 'Create graph command',
+    type: 1,
+}
