@@ -11,7 +11,7 @@ export async function CreateGraph() {
         unit: 'km',
         type: 'int',
         color: 'momiji',
-    }
+    };
     const options = {
         method: 'POST',
         headers: {
@@ -21,6 +21,25 @@ export async function CreateGraph() {
         body: JSON.stringify(body),
     };
     console.log(options);
+    const res = await fetch(endpoint, options);
+    return res
+}
+
+export async function PostPixel() {
+    const endpoint = baseURL + `v1/users/${process.env.USER_NAME}/graphs/${process.env.GRAPH_ID}`;
+    const now = new Date();
+    const body = {
+        date: now.getFullYear().toString() + ZeroPadding(now.getMonth(), 2) + ZeroPadding(now.getDate(), 2),
+        quantity: 1,
+    };
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-USER-TOKEN': process.env.PASSWORD,
+        },
+        body: JSON.stringify(body),
+    };
     const res = await fetch(endpoint, options);
     return res
 }
