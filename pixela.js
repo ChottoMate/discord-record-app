@@ -26,12 +26,12 @@ export async function CreateGraph() {
     return res
 }
 
-export async function PostPixel() {
+export async function PostPixel(quantity) {
     const endpoint = baseURL + `v1/users/${process.env.USER_NAME}/graphs/${process.env.GRAPH_ID}`;
     const now = new Date();
     const body = {
         date: now.getFullYear().toString() + ZeroPadding(now.getMonth() + 1, 2) + ZeroPadding(now.getDate(), 2),
-        quantity: '1',
+        quantity: quantity,
     };
     const options = {
         method: 'POST',

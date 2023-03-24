@@ -59,12 +59,13 @@ app.post('/interactions', async function(req, res) {
             }
             is_started = false;
             stop_time = new Date();
-            let diff = stop_time.getTime() - start_time.getTime();
-            let diff_hour = Math.floor(diff / (60 * 60 * 1000));
-            let diff_minute = Math.floor(diff / (60 * 1000));
-            let diff_second = Math.floor(diff / 1000);
-            let recorded_time = `${ZeroPadding(diff_hour, 2)}:${ZeroPadding(diff_minute, 2)}:${ZeroPadding(diff_second, 2)}`;
-            await PostPixel()
+            const diff = stop_time.getTime() - start_time.getTime();
+            const diff_hour = Math.floor(diff / (60 * 60 * 1000));
+            const diff_minute = Math.floor(diff / (60 * 1000));
+            const diff_second = Math.floor(diff / 1000);
+            const recorded_time = `${ZeroPadding(diff_hour, 2)}:${ZeroPadding(diff_minute, 2)}:${ZeroPadding(diff_second, 2)}`;
+            const quantity = (diff / (60 * 60 * 1000)).toFixed(2);
+            await PostPixel(quantity);
             return res.send({
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
