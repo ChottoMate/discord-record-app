@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { ZeroPadding } from "./utils.js";
 
 const baseURL = 'https://pixe.la/';
 
@@ -29,8 +30,8 @@ export async function PostPixel() {
     const endpoint = baseURL + `v1/users/${process.env.USER_NAME}/graphs/${process.env.GRAPH_ID}`;
     const now = new Date();
     const body = {
-        date: now.getFullYear().toString() + ZeroPadding(now.getMonth(), 2) + ZeroPadding(now.getDate(), 2),
-        quantity: 1,
+        date: now.getFullYear().toString() + ZeroPadding(now.getMonth() + 1, 2) + ZeroPadding(now.getDate(), 2),
+        quantity: '1',
     };
     const options = {
         method: 'POST',
@@ -40,6 +41,5 @@ export async function PostPixel() {
         },
         body: JSON.stringify(body),
     };
-    const res = await fetch(endpoint, options);
-    return res
+    await fetch(endpoint, options);
 }

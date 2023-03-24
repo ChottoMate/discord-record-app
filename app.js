@@ -3,7 +3,7 @@ import { InteractionResponseType, InteractionType } from 'discord-interactions';
 import express from 'express';
 import { CREATE_GRAPH_COMMNAND, HasGuildCommands, START_COMMAND, STOP_COMMAND, TEST_COMMAND } from './commands.js';
 import { VerifyDiscordRequest, ZeroPadding } from './utils.js';
-import { CreateGraph } from './pixela.js';
+import { CreateGraph, PostPixel } from './pixela.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -64,6 +64,7 @@ app.post('/interactions', async function(req, res) {
             let diff_minute = Math.floor(diff / (60 * 1000));
             let diff_second = Math.floor(diff / 1000);
             let recorded_time = `${ZeroPadding(diff_hour, 2)}:${ZeroPadding(diff_minute, 2)}:${ZeroPadding(diff_second, 2)}`;
+            await PostPixel()
             return res.send({
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
