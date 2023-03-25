@@ -3,15 +3,15 @@ import { ZeroPadding } from "./utils.js";
 
 const baseURL = 'https://pixe.la/';
 
-export async function CreateGraph() {
+export async function CreateGraph(id, name, unit, type, color) {
     const endpoint = baseURL + `v1/users/${process.env.USER_NAME}/graphs`;
     console.log(endpoint);
     const body = {
-        id: 'test-id',
-        name: 'test-name',
-        unit: 'km',
-        type: 'int',
-        color: 'momiji',
+        id: id,
+        name: name,
+        unit: unit,
+        type: type,
+        color: color,
     };
     const options = {
         method: 'POST',

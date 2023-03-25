@@ -26,7 +26,7 @@ app.post('/interactions', async function(req, res) {
             return res.send({
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
-                    content: 'hello world.'
+                    content: 'Hello world.',
                 }
             });
         }
@@ -74,23 +74,98 @@ app.post('/interactions', async function(req, res) {
             })
         }
         if (name === 'create_graph') {
-            const res_pixela = await CreateGraph();
-            if (!res_pixela.ok) {
-                const data = await res_pixela.json();
-                console.log(res_pixela.status);
-                return res.send({
-                    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-                    data: {
-                        content: JSON.stringify(data)
-                    }
-                })
-            }
+            return res.send({
+                type: InteractionResponseType.MODAL,
+                data: {
+                    title: 'Test',
+                    custom_id: 'test-modal',
+                    components: [
+                        {
+                            type: 1,
+                            components: [
+                                {
+                                    type: 4,
+                                    style: 1,
+                                    label: 'id',
+                                    custom_id: 'id',
+                                },
+                            ]
+                        },
+                        {
+                            type: 1,
+                            components: [
+                                {
+                                    type: 4,
+                                    style: 1,
+                                    label: 'name',
+                                    custom_id: 'name',
+                                },
+                            ]
+                        },
+                        {
+                            type: 1,
+                            components: [
+                                {
+                                    type: 4,
+                                    style: 1,
+                                    label: 'unit',
+                                    custom_id: 'unit',
+                                },
+                            ]
+                        },
+                        {
+                            type: 1,
+                            components: [
+                                {
+                                    type: 4,
+                                    style: 1,
+                                    label: 'type',
+                                    custom_id: 'type',
+                                    placeholder: 'only int or float',
+                                },
+                            ]
+                        },
+                        {
+                            type: 1,
+                            components: [
+                                {
+                                    type: 4,
+                                    style: 1,
+                                    label: 'color',
+                                    custom_id: 'color',
+                                    placeholder: 'shibafu, momiji, sora, ichou, ajisai, kuro',
+                                },
+                            ]
+                        },
+                    ]
+                },
+            });
+        }
+    }
+    if (type === InteractionType.MODAL_SUBMIT) {
+        console.log(data);
+        if (data.custom_id === 'create-graph') {
+            // const id = data.components[0].components[0].value;
+            // const name = data.components[1].components[0].value;
+            // const unit = data.components[2].components[0].value;
+            // const type = data.components[3].components[0].value;
+            // const color = data.components[4].components[0].value;
+            // const res_pixela = await CreateGraph(id, name, unit, type, color);
+            // if (!res_pixela.ok) {
+            //     const data = await res_pixela.json();
+            //     return res.send({
+            //         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            //         data: {
+            //             content: JSON.stringify(data)
+            //         }
+            //     })
+            // }
             return res.send({
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
                     content: 'Graph created'
-                }
-            })
+                },
+            });
         }
     }
 })

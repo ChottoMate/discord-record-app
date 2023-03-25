@@ -11,9 +11,10 @@ async function HasGuildCommand(appId, guildId, command) {
     try {
         const res = await DiscordRequest(endpoint, { method: 'GET'});
         const data = await res.json();
-
+        
         if (data) {
             const installedNames = data.map((c) => c['name']);
+            console.log(installedNames);
             if (!installedNames.includes(command['name'])) {
                 console.log(`Installing "${command['name']}"`);
                 InstallGuildCommand(appId, guildId, command);
