@@ -7,7 +7,7 @@ import { CreateGraph, PostPixel } from './pixela.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-let start_time;
+let start_time: Date;
 let stop_time;
 let is_started = false;
 app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));

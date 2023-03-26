@@ -1,10 +1,10 @@
 import 'dotenv/config';
 import { verifyKey } from "discord-interactions";
-import fetch from "node-fetch";
+import fetch from 'node-fetch';
 
 
-export function VerifyDiscordRequest(clientKey) {
-    return function(req, res, buf, encoding) {
+export function VerifyDiscordRequest(clientKey: any) {
+    return function(req: any, res: any, buf: any, encoding: any) {
         const signature = req.get('X-Signature-Ed25519');
         const timestamp = req.get('X-Signature-Timestamp');
 
@@ -16,8 +16,9 @@ export function VerifyDiscordRequest(clientKey) {
     }
 }
 
-export async function DiscordRequest(endpoint, options) {
+export async function DiscordRequest(endpoint: string, options: any) {
     const url = 'https://discord.com/api/v10/' + endpoint;
+    console.log(url);
     if (options.body) options.body = JSON.stringify(options.body);
     const res = await fetch(url, {
         headers: {
@@ -35,7 +36,7 @@ export async function DiscordRequest(endpoint, options) {
     return res;
 }
 
-export function ZeroPadding(num, digit) {
+export function ZeroPadding(num: number, digit: number) {
     const zero = '0'.repeat(digit - 1);
     const result = (zero + num).slice(-1 * digit);
     return result

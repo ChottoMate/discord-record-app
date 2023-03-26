@@ -1,19 +1,19 @@
-import { DiscordRequest } from "./utils.js"
+import { DiscordRequest } from "./utils.js";
 
-export async function HasGuildCommands(appId, guildId, commands) {
+export async function HasGuildCommands(appId: any, guildId: any, commands: any) {
     if (guildId === '' || appId === '') return;
-    commands.forEach((c) => HasGuildCommand(appId, guildId, c));
+    commands.forEach((c: any) => HasGuildCommand(appId, guildId, c));
 }
 
-async function HasGuildCommand(appId, guildId, command) {
+async function HasGuildCommand(appId: string, guildId: string, command: any) {
     const endpoint = `applications/${appId}/guilds/${guildId}/commands`
 
     try {
         const res = await DiscordRequest(endpoint, { method: 'GET'});
-        const data = await res.json();
+        const data: any = await res.json();
         
         if (data) {
-            const installedNames = data.map((c) => c['name']);
+            const installedNames = data.map((c: any) => c['name']);
             console.log(installedNames);
             if (!installedNames.includes(command['name'])) {
                 console.log(`Installing "${command['name']}"`);
@@ -27,7 +27,7 @@ async function HasGuildCommand(appId, guildId, command) {
     }
 }
 
-async function InstallGuildCommand(appId, guildId, command) {
+async function InstallGuildCommand(appId: string, guildId: string, command: any) {
     const endpoint = `applications/${appId}/guilds/${guildId}/commands`;
     try {
         await DiscordRequest(endpoint, { method: 'POST', body: command});
