@@ -27,7 +27,7 @@ async function HasGuildCommand(appId, guildId, command) {
     }
 }
 
-export async function InstallGuildCommand(appId, guildId, command) {
+async function InstallGuildCommand(appId, guildId, command) {
     const endpoint = `applications/${appId}/guilds/${guildId}/commands`;
     try {
         await DiscordRequest(endpoint, { method: 'POST', body: command});

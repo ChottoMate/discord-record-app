@@ -77,8 +77,8 @@ app.post('/interactions', async function(req, res) {
             return res.send({
                 type: InteractionResponseType.MODAL,
                 data: {
-                    title: 'Test',
-                    custom_id: 'test-modal',
+                    title: 'Create graph',
+                    custom_id: 'create-graph',
                     components: [
                         {
                             type: 1,
@@ -145,21 +145,21 @@ app.post('/interactions', async function(req, res) {
     if (type === InteractionType.MODAL_SUBMIT) {
         console.log(data);
         if (data.custom_id === 'create-graph') {
-            // const id = data.components[0].components[0].value;
-            // const name = data.components[1].components[0].value;
-            // const unit = data.components[2].components[0].value;
-            // const type = data.components[3].components[0].value;
-            // const color = data.components[4].components[0].value;
-            // const res_pixela = await CreateGraph(id, name, unit, type, color);
-            // if (!res_pixela.ok) {
-            //     const data = await res_pixela.json();
-            //     return res.send({
-            //         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-            //         data: {
-            //             content: JSON.stringify(data)
-            //         }
-            //     })
-            // }
+            const id = data.components[0].components[0].value;
+            const name = data.components[1].components[0].value;
+            const unit = data.components[2].components[0].value;
+            const type = data.components[3].components[0].value;
+            const color = data.components[4].components[0].value;
+            const res_pixela = await CreateGraph(id, name, unit, type, color);
+            if (!res_pixela.ok) {
+                const data = await res_pixela.json();
+                return res.send({
+                    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+                    data: {
+                        content: JSON.stringify(data)
+                    }
+                })
+            }
             return res.send({
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
