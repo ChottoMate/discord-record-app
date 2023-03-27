@@ -1,13 +1,16 @@
+import {jest} from '@jest/globals'
+import fetch, { Response } from "node-fetch";
 import { DiscordRequest } from "../utils";
-import fetch from "node-fetch";
-const {Response} = jest.requireActual('node-fetch');
-jest.mock('node-fetch', () => jest.fn());
 
 test('it should be success', async () => {
+    // jest.mocked(fetch).mockReturnValue(
+    //     Promise.resolve(new Response("ok", { status: 200 }))
+    // );
     const expectedResponse = { ok: true };
-    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(new Response(JSON.stringify(expectedResponse)));
+    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValueOnce(new Response(JSON.stringify(expectedResponse)));
     const options = { method: 'POST', body: {test: 'test'}};
     const endpoint = 'test/'
+    
     const discord_response = await DiscordRequest(endpoint, options);
     expect(discord_response).toEqual("faf");
 });
