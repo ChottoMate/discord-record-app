@@ -1,0 +1,14 @@
+{
+    "all": true,
+    "check-coverage": true,
+    "include": [
+        "src/**/*.js"
+    ],
+    "exclude":[
+        "src/__tests__/*"
+    ],
+    "reporter": "text",
+    "report-dir": "report",
+    "temp-dir": ".nyc_output",
+    "sourceMap": true
+}

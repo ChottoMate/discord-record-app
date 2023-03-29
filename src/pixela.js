@@ -3,7 +3,7 @@ import { ZeroPadding } from "./utils.js";
 
 const baseURL = 'https://pixe.la/';
 
-export async function CreateGraph(id: string, name: string, unit: string, type: string, color: string) {
+export async function CreateGraph(id, name, unit, type, color) {
     const endpoint = baseURL + `v1/users/${process.env.USER_NAME}/graphs`;
     const body = {
         id: id,
@@ -12,7 +12,7 @@ export async function CreateGraph(id: string, name: string, unit: string, type: 
         type: type,
         color: color,
     };
-    const options: any = {
+    const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -25,14 +25,14 @@ export async function CreateGraph(id: string, name: string, unit: string, type: 
     return res
 }
 
-export async function PostPixel(quantity: string) {
+export async function PostPixel(quantity) {
     const endpoint = baseURL + `v1/users/${process.env.USER_NAME}/graphs/${process.env.GRAPH_ID}`;
     const now = new Date();
     const body = {
         date: now.getFullYear().toString() + ZeroPadding(now.getMonth() + 1, 2) + ZeroPadding(now.getDate(), 2),
         quantity: quantity,
     };
-    const options: any = {
+    const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
